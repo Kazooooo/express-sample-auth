@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
+import * as actions from '../../actions';
 
 class Signin extends Component {
   handleFormSubmit({email, password}) {
     console.log(email, password);
+    // Need to do something to log user in
+    this.props.signinUser({ email, password });
   }
 
   render() {
@@ -24,6 +28,12 @@ class Signin extends Component {
   }
 }
 
-export default reduxForm({
-  form: 'signin',
-})(Signin);
+// Decorate with reduxForm(). It will read the initialValues prop provided by connect()
+const InitializeFromStateForm = reduxForm({
+  form: 'signin',  // a unique identifier for this form
+})(Signin)
+
+// You have to connect() to any reducers that you wish to connect to yourself
+const connected = connect(null, actions)(InitializeFromStateForm)
+
+export default connected;
