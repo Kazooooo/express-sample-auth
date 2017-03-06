@@ -10,6 +10,16 @@ class Signin extends Component {
     this.props.signinUser({ email, password });
   }
 
+  renderAlert() {
+    if (this.props.errorMessage) {
+      return (
+        <div className="alert alert-danger">
+          <strong>Oops!</strong> {this.props.errorMessage}
+        </div>
+      )
+    }
+  }
+
   render() {
     const { handleSubmit } = this.props;
     return (
@@ -22,10 +32,15 @@ class Signin extends Component {
           <label htmlFor="password">Password</label>
           <Field className="form-control" name="password" component="input" type="password" />
         </fieldset>
+        {this.renderAlert()}
         <button type="submit" className="btn btn-primary">Submit</button>
       </form>
     );
   }
+}
+
+function mapStateToProps(state) {
+  return { errorMessage: state.auth.error };
 }
 
 // Decorate with reduxForm(). It will read the initialValues prop provided by connect()
@@ -34,6 +49,6 @@ const InitializeFromStateForm = reduxForm({
 })(Signin)
 
 // You have to connect() to any reducers that you wish to connect to yourself
-const connected = connect(null, actions)(InitializeFromStateForm)
+const connected = connect(mapStateToProps, actions)(InitializeFromStateForm)
 
 export default connected;

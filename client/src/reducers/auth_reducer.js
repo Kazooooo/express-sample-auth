@@ -1,6 +1,7 @@
 import {
   AUTH_USER,
   UNAUTH_USER,
+  AUTH_ERROR,
 } from '../actions/types';
 
 export default function(state = {}, action) {
@@ -10,6 +11,9 @@ export default function(state = {}, action) {
       break;
     case UNAUTH_USER:
       return { ...state, authenticated: false };
+      break;
+    case AUTH_ERROR:
+      return { ...state, error: action.payload };
       break;
     default:
       return state;
