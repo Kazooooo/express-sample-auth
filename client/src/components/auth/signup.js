@@ -4,8 +4,9 @@ import { Field, reduxForm } from 'redux-form';
 import * as actions from '../../actions';
 
 class Signup extends Component {
-  handleFormSubmit({email, password}) {
-    console.log(email, password);
+  handleFormSubmit(formProps) {
+    // Call action creater to sign up the user!
+    this.props.signupUser(formProps);
   }
 
   renderField({ input, label, type, name, meta: { touched, error } }) {
@@ -18,6 +19,15 @@ class Signup extends Component {
     );
   }
 
+  renderAlert() {
+    if (this.props.errorMessage) {
+      return (
+        <div className="alert alert-danger">
+          <strong>Oops!</strong> {this.props.errorMessage}
+        </div>
+      );
+    }
+  }
 
   render() {
     const { handleSubmit } = this.props;
@@ -26,6 +36,7 @@ class Signup extends Component {
         <Field label="Email" name="email" component={this.renderField} type="email" />
         <Field label="Password" name="password" component={this.renderField} type="password" />
         <Field label="Confirm Password" name="passwordConfirm" component={this.renderField} type="password" />
+        {this.renderAlert()}
         <button type="submit" className="btn btn-primary">Sign in!</button>
       </form>
     );
