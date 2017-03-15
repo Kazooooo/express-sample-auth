@@ -49,6 +49,4 @@ const InitializeFromStateForm = reduxForm({
 })(Signin)
 
 // You have to connect() to any reducers that you wish to connect to yourself
-const connected = connect(mapStateToProps, actions)(InitializeFromStateForm)
-
-export default connected;
+export default connect(mapStateToProps, actions)(InitializeFromStateForm);
